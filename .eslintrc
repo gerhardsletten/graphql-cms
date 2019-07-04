@@ -1,0 +1,16 @@
+{
+  "parser": "babel-eslint",
+  "extends": [
+    "prettier",
+    "eslint:recommended",
+    "plugin:jest/recommended"
+  ],
+  "plugins": ["jest"],
+  "rules": {
+    "space-before-function-paren": ["error", "never"]
+  },
+  "env": {
+    "node": true,
+    "es6": true
+  }
+}

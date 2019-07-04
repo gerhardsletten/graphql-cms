@@ -1,0 +1,7 @@
+__tests__
+.DS_STORE
+coverage
+.eslintrc
+src/parser.js
+src/create-remark-node.js
+src/create-file-node.js

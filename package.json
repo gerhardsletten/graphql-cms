@@ -1,0 +1,48 @@
+{
+  "name": "graphql-cms",
+  "version": "1.1.1",
+  "description": "Headless CMS serving markdown/remark content through a graphql-service",
+  "main": "src/index.js",
+  "scripts": {
+    "format": "prettier --write \"*.js\"",
+    "lint": "eslint -c .eslintrc src",
+    "coverage": "jest --coverage",
+    "test": "jest"
+  },
+  "bin": {
+    "graphql-cms": "src/bin.js"
+  },
+  "author": "Eyvind Gerhard Sletten <gerhardsletten@gmail.com> (http://www.metabits.no/)",
+  "license": "ISC",
+  "dependencies": {
+    "array-sort": "^1.0.0",
+    "bluebird": "^3.5.5",
+    "chokidar": "^3.0.1",
+    "commander": "^2.20.0",
+    "fs-extra": "^8.0.1",
+    "get-value": "^3.0.1",
+    "graphql": "^14.3.1",
+    "graphql-compose": "^7.1.0",
+    "graphql-compose-json": "^4.0.1",
+    "gray-matter": "^4.0.2",
+    "hast-util-to-html": "^6.0.1",
+    "lodash": "^4.17.11",
+    "md5-file": "^4.0.0",
+    "mdast-util-to-hast": "^6.0.1",
+    "mime": "^2.4.4",
+    "pretty-bytes": "^5.2.0",
+    "remark": "^10.0.1",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^10.0.1",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^5.0.0",
+    "eslint-plugin-jest": "^22.7.1",
+    "eslint-plugin-prettier": "^3.1.0",
+    "jest": "^24.8.0",
+    "prettier": "^1.18.2"
+  }
+}
