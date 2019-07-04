@@ -1,0 +1,15 @@
+{
+  "name": "graphql-cms-example",
+  "version": "1.0.0",
+  "description": "Nada",
+  "main": "index.js",
+  "scripts": {
+    "start": "micro",
+    "build": "../src/bin.js build"
+  },
+  "dependencies": {
+    "apollo-server-micro": "^2.6.3",
+    "graphql": "^14.4.2",
+    "micro": "^9.3.4"
+  }
+}

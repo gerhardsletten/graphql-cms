@@ -1,4 +1,4 @@
-const {createSchema, createSchemaFromConfig} = require('./schema');
+const { createSchema, createSchemaFromConfig } = require('./schema')
 
 module.exports = {
   createSchema,

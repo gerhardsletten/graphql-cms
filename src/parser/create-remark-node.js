@@ -5,11 +5,7 @@ const toHAST = require(`mdast-util-to-hast`)
 const hastToHTML = require(`hast-util-to-html`)
 
 module.exports = async function onCreateNode(
-  {
-    node,
-    loadNodeContent,
-    actions
-  },
+  { node, loadNodeContent, actions },
   options = {}
 ) {
   const { updateNode } = actions
@@ -45,16 +41,15 @@ module.exports = async function onCreateNode(
 
     const remark = new Remark().data(`settings`, remarkOptions)
     const markdownAST = remark.parse(data.content)
-    const hastOptions = {allowDangerousHTML: true}
+    const hastOptions = { allowDangerousHTML: true }
     let markdownNode = {
       frontmatter: {
         title: ``,
-        ...data.data,
+        ...data.data
       },
       content: hastToHTML(toHAST(markdownAST, hastOptions), hastOptions),
       rawContent: data.content
     }
-
 
     updateNode(node.id, markdownNode)
     return markdownNode

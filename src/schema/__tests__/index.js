@@ -1,60 +1,64 @@
 const { graphql } = require(`graphql`)
-const {createSchema} = require('..')
+const { createSchema } = require('..')
 
-const pages = [{
-  id: '1',
-  slug: '/',
-  updated: '2019-07-03T17:56:47.613Z',
-  created: '2019-06-17T12:32:37.365Z',
-  rawContent: 'About content',
-  content: 'Homepage content',
-  parentId: null,
-  frontmatter: {
-    title: 'Homepage',
-    order: 1,
-    menuOrder: 1,
-    meta: {
-      description: 'Seo description'
+const pages = [
+  {
+    id: '1',
+    slug: '/',
+    updated: '2019-07-03T17:56:47.613Z',
+    created: '2019-06-17T12:32:37.365Z',
+    rawContent: 'About content',
+    content: 'Homepage content',
+    parentId: null,
+    frontmatter: {
+      title: 'Homepage',
+      order: 1,
+      menuOrder: 1,
+      meta: {
+        description: 'Seo description'
+      }
+    }
+  },
+  {
+    id: '2',
+    slug: '/about',
+    updated: '2019-07-03T17:56:47.613Z',
+    created: '2019-06-17T12:32:37.365Z',
+    rawContent: 'About content',
+    content: 'About content',
+    parentId: '1',
+    frontmatter: {
+      title: 'About',
+      order: 2,
+      menuOrder: 2,
+      meta: {
+        description: 'Seo description'
+      }
+    }
+  },
+  {
+    id: '3',
+    slug: '/contact',
+    updated: '2019-07-03T17:56:47.613Z',
+    created: '2019-06-17T12:32:37.365Z',
+    rawContent: 'About content',
+    content: 'Contact content',
+    parentId: '1',
+    frontmatter: {
+      title: 'Contact',
+      order: 3,
+      meta: {
+        description: 'Seo description'
+      }
     }
   }
-}, {
-  id: '2',
-  slug: '/about',
-  updated: '2019-07-03T17:56:47.613Z',
-  created: '2019-06-17T12:32:37.365Z',
-  rawContent: 'About content',
-  content: 'About content',
-  parentId: '1',
-  frontmatter: {
-    title: 'About',
-    order: 2,
-    menuOrder: 2,
-    meta: {
-      description: 'Seo description'
-    }
-  }
-}, {
-  id: '3',
-  slug: '/contact',
-  updated: '2019-07-03T17:56:47.613Z',
-  created: '2019-06-17T12:32:37.365Z',
-  rawContent: 'About content',
-  content: 'Contact content',
-  parentId: '1',
-  frontmatter: {
-    title: 'Contact',
-    order: 3,
-    meta: {
-      description: 'Seo description'
-    }
-  }
-}]
+]
 
 describe(`Graphql api for pages`, () => {
-  const schema = createSchema({pages})
+  const schema = createSchema({ pages })
   const runQuery = query => graphql(schema, query)
 
-  it(`Query frontpage`, async() => {
+  it(`Query frontpage`, async () => {
     const query = `
       {
         test: page(slug:"/") {
@@ -88,7 +92,7 @@ describe(`Graphql api for pages`, () => {
     expect(results.data).toEqual(expected)
   })
 
-  it(`Query subpage`, async() => {
+  it(`Query subpage`, async () => {
     const query = `
       {
         test: page(slug:"/about") {
@@ -113,19 +117,22 @@ describe(`Graphql api for pages`, () => {
         id: '2',
         slug: '/about',
         content: 'About content',
-        path: [{
-          slug: '/',
-          frontmatter: {
-            title: "Homepage"
+        path: [
+          {
+            slug: '/',
+            frontmatter: {
+              title: 'Homepage'
+            }
+          },
+          {
+            slug: '/about',
+            frontmatter: {
+              title: 'About'
+            }
           }
-        }, {
-          slug: '/about',
-          frontmatter: {
-            title: "About"
-          }
-        }],
+        ],
         parent: {
-          id: "1"
+          id: '1'
         }
       }
     }
@@ -133,7 +140,7 @@ describe(`Graphql api for pages`, () => {
     expect(results.data).toEqual(expected)
   })
 
-  it(`Query children in order`, async() => {
+  it(`Query children in order`, async () => {
     const query = `
       {
         test: page(slug:"/") {
@@ -152,13 +159,16 @@ describe(`Graphql api for pages`, () => {
       test: {
         children: {
           count: 2,
-          nodes: [{
-            id: "3",
-            slug: "/contact"
-          }, {
-            id: "2",
-            slug: "/about"
-          }]
+          nodes: [
+            {
+              id: '3',
+              slug: '/contact'
+            },
+            {
+              id: '2',
+              slug: '/about'
+            }
+          ]
         }
       }
     }
@@ -166,7 +176,7 @@ describe(`Graphql api for pages`, () => {
     expect(results.data).toEqual(expected)
   })
 
-  it(`Query all pages`, async() => {
+  it(`Query all pages`, async () => {
     const query = `
       {
         test: pages {
@@ -182,23 +192,27 @@ describe(`Graphql api for pages`, () => {
     const expected = {
       test: {
         count: 3,
-        nodes: [{
-          id: "1",
-          slug: "/"
-        }, {
-          id: "2",
-          slug: "/about"
-        }, {
-          id: "3",
-          slug: "/contact"
-        }]
+        nodes: [
+          {
+            id: '1',
+            slug: '/'
+          },
+          {
+            id: '2',
+            slug: '/about'
+          },
+          {
+            id: '3',
+            slug: '/contact'
+          }
+        ]
       }
     }
     expect(results.errors).toBeUndefined()
     expect(results.data).toEqual(expected)
   })
 
-  it(`Query all pages with with limit and skip`, async() => {
+  it(`Query all pages with with limit and skip`, async () => {
     const query = `
       {
         test: pages(orderBy:frontmatter_order_ASC, limit: 1, skip: 1 ) {
@@ -214,17 +228,19 @@ describe(`Graphql api for pages`, () => {
     const expected = {
       test: {
         count: 3,
-        nodes: [{
-          id: "2",
-          slug: "/about"
-        }]
+        nodes: [
+          {
+            id: '2',
+            slug: '/about'
+          }
+        ]
       }
     }
     expect(results.errors).toBeUndefined()
     expect(results.data).toEqual(expected)
   })
 
-  it(`Query all pages with filter eq`, async() => {
+  it(`Query all pages with filter eq`, async () => {
     const query = `
       {
         test: pages( where:{frontmatter_order__eq:2} ) {
@@ -240,16 +256,18 @@ describe(`Graphql api for pages`, () => {
     const expected = {
       test: {
         count: 1,
-        nodes: [{
-          id: "2",
-          slug: "/about"
-        }]
+        nodes: [
+          {
+            id: '2',
+            slug: '/about'
+          }
+        ]
       }
     }
     expect(results.errors).toBeUndefined()
     expect(results.data).toEqual(expected)
   })
-  it(`Query all pages with filter ne`, async() => {
+  it(`Query all pages with filter ne`, async () => {
     const query = `
       {
         test: pages( where:{frontmatter_menuOrder__ne: null} ) {
@@ -265,13 +283,16 @@ describe(`Graphql api for pages`, () => {
     const expected = {
       test: {
         count: 2,
-        nodes: [{
-          id: "1",
-          slug: "/"
-        }, {
-          id: "2",
-          slug: "/about"
-        }]
+        nodes: [
+          {
+            id: '1',
+            slug: '/'
+          },
+          {
+            id: '2',
+            slug: '/about'
+          }
+        ]
       }
     }
     expect(results.errors).toBeUndefined()

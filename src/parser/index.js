@@ -4,27 +4,27 @@ const { createFileNode, createContentDigest } = require(`./create-file-node`)
 const createRemarkNode = require(`./create-remark-node`)
 const uuidv5 = require(`uuid/v5`)
 const _ = require(`lodash`)
-const {defaults, buildConfig} = require('../config')
+const { defaults, buildConfig } = require('../config')
 
-const createNodeId = (path) => uuidv5(path, uuidv5.URL)
+const createNodeId = path => uuidv5(path, uuidv5.URL)
 
 const NODES = []
 
-const createNode = (node) => {
+const createNode = node => {
   NODES.push(node)
 }
 const updateNode = (nodeId, node) => {
-  const found = NODES.find(({id}) => id === nodeId)
-  Object.keys(node).forEach((k) => {
+  const found = NODES.find(({ id }) => id === nodeId)
+  Object.keys(node).forEach(k => {
     found[k] = node[k]
   })
 }
 const createParentChildLink = ({ parent, child }) => {
-  const parentNode = NODES.find(({id}) => id === parent.id)
+  const parentNode = NODES.find(({ id }) => id === parent.id)
   parentNode.children.push(child.id)
 }
 
-const loadNodeContent = async(node) => {
+const loadNodeContent = async node => {
   if (_.isString(node.internal.content)) {
     return node.internal.content
   } else {
@@ -38,27 +38,34 @@ const loadNodeContent = async(node) => {
     })
   }
 }
-function transformNodes({internal, ...node}) {
-  const {relativePath} = internal
-  const slug = relativePath === 'index.md' ? '/' : `/${relativePath}`.replace('/index.md', '').replace('.md', '')
+function transformNodes({ internal, ...node }) {
+  const { relativePath } = internal
+  const slug =
+    relativePath === 'index.md'
+      ? '/'
+      : `/${relativePath}`.replace('/index.md', '').replace('.md', '')
   return {
     ...node,
     slug
   }
 }
 
-const parseAndWriteMarkdown = async(opts = {}) => {
-  const options = buildConfig({...defaults,...opts})
+const parseAndWriteMarkdown = async (opts = {}) => {
+  const options = buildConfig({ ...defaults, ...opts })
   const allPages = await parseMarkdownFiles(options)
-  const mdPages = allPages.filter(({internal: {extension}}) => extension === 'md').map(transformNodes)
-  const mdPagesWithParent = mdPages.map((item) => {
+  const mdPages = allPages
+    .filter(({ internal: { extension } }) => extension === 'md')
+    .map(transformNodes)
+  const mdPagesWithParent = mdPages.map(item => {
     const parentSlug = item.slug.substring(0, item.slug.lastIndexOf('/')) || '/'
-    const parentPage = mdPages.filter(({slug, id}) => id !== item.id && parentSlug.includes(slug)).reduce((found, current) => {
-      const prev = found ? found.slug.length : 0
-      if (current.slug.length > prev) {
-        return current
-      }
-    }, null)
+    const parentPage = mdPages
+      .filter(({ slug, id }) => id !== item.id && parentSlug.includes(slug))
+      .reduce((found, current) => {
+        const prev = found ? found.slug.length : 0
+        if (current.slug.length > prev) {
+          return current
+        }
+      }, null)
     return {
       ...item,
       parentId: parentPage ? parentPage.id : null
@@ -69,27 +76,25 @@ const parseAndWriteMarkdown = async(opts = {}) => {
   return mdPagesWithParent
 }
 
-const parseMarkdownFiles = async(opts = {}) => {
-  const options = buildConfig({...defaults,...opts})
+const parseMarkdownFiles = async (opts = {}) => {
+  const options = buildConfig({ ...defaults, ...opts })
   const createAndProcessNode = path => {
-    const fileNodePromise = createFileNode(
-      path,
-      createNodeId,
-      options
-    ).then(node => {
-      createNode(node)
-      return createRemarkNode({
-        node,
-        loadNodeContent,
-        actions: {
-          createNode,
-          updateNode,
-          createParentChildLink
-        },
-        createNodeId,
-        createContentDigest
-      })
-    })
+    const fileNodePromise = createFileNode(path, createNodeId, options).then(
+      node => {
+        createNode(node)
+        return createRemarkNode({
+          node,
+          loadNodeContent,
+          actions: {
+            createNode,
+            updateNode,
+            createParentChildLink
+          },
+          createNodeId,
+          createContentDigest
+        })
+      }
+    )
     return fileNodePromise
   }
   if (!fs.existsSync(options.markdownDir)) {
@@ -112,8 +117,8 @@ const parseMarkdownFiles = async(opts = {}) => {
       `**/bower_components`,
       `**/node_modules`,
       `../**/dist/**`,
-      ...(options.ignore || []),
-    ],
+      ...(options.ignore || [])
+    ]
   })
   watcher.on('add', path => {
     pathQueue.push(path)

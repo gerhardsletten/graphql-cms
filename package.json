@@ -5,9 +5,12 @@
   "main": "src/index.js",
   "scripts": {
     "format": "prettier --write \"*.js\"",
-    "lint": "eslint -c .eslintrc src",
+    "format": "prettier --write \"src/**/*.js\" \"example/**/*.js\"",
+    "lint": "eslint -c .eslintrc src example",
     "coverage": "jest --coverage",
-    "test": "jest"
+    "test-watch": "jest --watch",
+    "jest": "jest",
+    "test": "npm run lint && npm run jest"
   },
   "bin": {
     "graphql-cms": "src/bin.js"

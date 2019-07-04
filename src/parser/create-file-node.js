@@ -23,11 +23,7 @@ function slash(path) {
   return path.replace(/\\/g, '/')
 }
 
-exports.createFileNode = async(
-  pathToFile,
-  createNodeId,
-  options = {}
-) => {
+exports.createFileNode = async (pathToFile, createNodeId, options = {}) => {
   const slashed = slash(pathToFile)
   const parsedSlashed = path.parse(slashed)
   const slashedFile = {
@@ -37,7 +33,7 @@ exports.createFileNode = async(
     relativeDirectory: path.relative(
       options.markdownDir || process.cwd(),
       parsedSlashed.dir
-    ),
+    )
   }
 
   const stats = await fs.stat(slashedFile.absolutePath)
@@ -50,12 +46,12 @@ exports.createFileNode = async(
       )
     ),
     extension: slashedFile.ext.slice(1).toLowerCase(),
-    fileSize: stats.size,
+    fileSize: stats.size
   }
   if (stats.isDirectory()) {
     internal.contentDigest = createContentDigest({
       stats: stats,
-      absolutePath: slashedFile.absolutePath,
+      absolutePath: slashedFile.absolutePath
     })
   } else {
     internal.contentDigest = await md5File(slashedFile.absolutePath)
