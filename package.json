@@ -1,10 +1,9 @@
 {
   "name": "graphql-cms",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Headless CMS serving markdown/remark content through a graphql-service",
   "main": "src/index.js",
   "scripts": {
-    "format": "prettier --write \"*.js\"",
     "format": "prettier --write \"src/**/*.js\" \"example/**/*.js\"",
     "lint": "eslint -c .eslintrc src example",
     "coverage": "jest --coverage",
