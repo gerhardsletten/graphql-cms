@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "apollo-server-micro": "^2.6.3",
-    "graphql": "^14.4.2",
     "micro": "^9.3.4"
   }
 }

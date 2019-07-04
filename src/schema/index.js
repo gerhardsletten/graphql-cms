@@ -11,19 +11,21 @@ const sortMethods = ['ASC', 'DESC']
 const FRONTMATTER_KEY = 'frontmatter'
 const EQ = `eq`
 const NE = `ne`
-// const GT = `gt`
-// const GTE = `gte`
-// const LT = `lt`
-// const LTE = `lte`
-// const CONTAINS = `contains`
-// const NOT_CONTAINS = `not_contains`
+const GT = `gt`
+const GTE = `gte`
+const LT = `lt`
+const LTE = `lte`
+const CONTAINS = `contains`
+const NOT_CONTAINS = `not_contains`
+const START_WITH = `start_with`
+const END_WITH = `end_with`
 
 const ALLOWED_OPERATORS = {
   Boolean: [EQ, NE],
-  Int: [EQ, NE], // , GT, GTE, LT, LTE
-  Float: [EQ, NE], // GT, GTE, LT, LTE
-  ID: [EQ, NE], // CONTAINS, NOT_CONTAINS
-  String: [EQ, NE] // , CONTAINS, NOT_CONTAINS
+  Int: [EQ, NE, GT, GTE, LT, LTE],
+  Float: [EQ, NE, GT, GTE, LT, LTE],
+  ID: [EQ, NE, CONTAINS, NOT_CONTAINS, START_WITH, END_WITH],
+  String: [EQ, NE, CONTAINS, NOT_CONTAINS, START_WITH, END_WITH]
 }
 
 const FILTER_FN = {
@@ -32,7 +34,27 @@ const FILTER_FN = {
     // Use null instead of undefine to make thsi work with empty fields
     const value = getValue(item, k) || null
     return value !== v
-  }
+  },
+  [GT]: (k, v) => item => getValue(item, k) > v,
+  [GTE]: (k, v) => item => getValue(item, k) >= v,
+  [LT]: (k, v) => item => getValue(item, k) < v,
+  [LTE]: (k, v) => item => getValue(item, k) <= v,
+  [CONTAINS]: (k, v) => item => {
+    const value = getValue(item, k)
+    return value && value.includes(v)
+  },
+  [NOT_CONTAINS]: (k, v) => item => {
+    const value = getValue(item, k)
+    return value && !value.includes(v)
+  },
+  [START_WITH]: (k, v) => item => {
+    const value = getValue(item, k)
+    return value && value.startsWith(v)
+  },
+  [END_WITH]: (k, v) => item => {
+    const value = getValue(item, k)
+    return value && !value.endsWith(v)
+  },
 }
 const DEVIDER_OBJECT = '_'
 const DEVIDER_METHOD = '__'
