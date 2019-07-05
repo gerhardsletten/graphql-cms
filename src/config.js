@@ -1,10 +1,12 @@
 const path = require(`path`)
+const fs = require(`fs-extra`)
 
 const defaultConfigPath = 'graphql-cms-config.js'
 
 exports.readConfigFile = confFile => {
   const configPath = confFile || defaultConfigPath
-  const config = require(path.resolve(process.cwd(), configPath))
+  const configPathResolved = path.isAbsolute(configPath) ? path.resolve(configPath) : path.resolve(process.cwd(), configPath)
+  const config = fs.existsSync(configPathResolved) ? require(configPathResolved) : {}
   return config
 }
 

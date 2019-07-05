@@ -54,6 +54,7 @@ module.exports = async function onCreateNode(
     updateNode(node.id, markdownNode)
     return markdownNode
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.log(
       `Error processing Markdown ${
         node.absolutePath ? `file ${node.absolutePath}` : `in node ${node.id}`

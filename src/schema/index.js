@@ -53,8 +53,8 @@ const FILTER_FN = {
   },
   [END_WITH]: (k, v) => item => {
     const value = getValue(item, k)
-    return value && !value.endsWith(v)
-  },
+    return value && value.endsWith(v)
+  }
 }
 const DEVIDER_OBJECT = '_'
 const DEVIDER_METHOD = '__'

@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Graphql api for pages Testing createSchemaFromConfig func 1`] = `
+GraphQLSchema {
+  "__allowedLegacyNames": Array [],
+  "__validationErrors": undefined,
+  "_directives": Array [
+    "@skip",
+    "@include",
+    "@deprecated",
+    "@default",
+  ],
+  "_implementations": Object {},
+  "_mutationType": undefined,
+  "_possibleTypeMap": Object {},
+  "_queryType": "Query",
+  "_subscriptionType": undefined,
+  "_typeMap": Object {
+    "Boolean": "Boolean",
+    "Float": "Float",
+    "Frontmatter": "Frontmatter",
+    "Frontmatter_Meta": "Frontmatter_Meta",
+    "ID": "ID",
+    "Int": "Int",
+    "JSON": "JSON",
+    "Page": "Page",
+    "PageConnection": "PageConnection",
+    "PagesOrderByInput": "PagesOrderByInput",
+    "PagesWhereInput": "PagesWhereInput",
+    "Query": "Query",
+    "String": "String",
+    "__Directive": "__Directive",
+    "__DirectiveLocation": "__DirectiveLocation",
+    "__EnumValue": "__EnumValue",
+    "__Field": "__Field",
+    "__InputValue": "__InputValue",
+    "__Schema": "__Schema",
+    "__Type": "__Type",
+    "__TypeKind": "__TypeKind",
+  },
+  "astNode": undefined,
+  "extensionASTNodes": undefined,
+}
+`;

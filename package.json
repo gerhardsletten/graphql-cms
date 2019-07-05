@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "format": "prettier --write \"src/**/*.js\" \"example/**/*.js\"",
-    "lint": "eslint -c .eslintrc src example",
+    "lint": "eslint -c .eslintrc src",
     "coverage": "jest --coverage",
     "test-watch": "jest --watch",
     "jest": "jest",
@@ -36,7 +36,6 @@
     "md5-file": "^4.0.0",
     "mdast-util-to-hast": "^6.0.1",
     "mime": "^2.4.4",
-    "pretty-bytes": "^5.2.0",
     "remark": "^10.0.1",
     "uuid": "^3.3.2"
   },
@@ -50,5 +49,11 @@
     "eslint-plugin-prettier": "^3.1.0",
     "jest": "^24.8.0",
     "prettier": "^1.18.2"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "node_modules",
+      "fixtures"
+    ]
   }
 }

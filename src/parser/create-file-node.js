@@ -2,7 +2,6 @@ const path = require('path')
 const fs = require('fs-extra')
 const crypto = require('crypto')
 const mime = require('mime')
-const prettyBytes = require('pretty-bytes')
 const md5File = require('bluebird').promisify(require('md5-file'))
 
 const createContentDigest = input => {

@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Markdown parser It can parse a folder of markdown-files 1`] = `
+Array [
+  Object {
+    "content": "<h1>This is the frontpage</h1>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+<h2>Ut enim ad minim veniam</h2>
+<p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
+    "created": "2019-06-17T12:32:37.365Z",
+    "frontmatter": Object {
+      "menuOrder": 1,
+      "order": 1,
+      "title": "Homepage",
+    },
+    "id": "5ab99e57-86b3-5e3e-8094-ef57b26b0bc3",
+    "parentId": null,
+    "rawContent": "
+# This is the frontpage
+
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+## Ut enim ad minim veniam
+
+Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+",
+    "slug": "/",
+    "updated": "2019-07-05T10:22:51.732Z",
+  },
+  Object {
+    "content": "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+<h2>Ut enim ad minim veniam</h2>
+<p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
+    "created": "2019-07-04T11:02:18.496Z",
+    "frontmatter": Object {
+      "order": 1,
+      "title": "Service child page",
+    },
+    "id": "a126655d-a003-546d-8204-21c8118ebb66",
+    "parentId": "cc945407-7e97-5f68-91f9-d297e60feb61",
+    "rawContent": "
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+## Ut enim ad minim veniam
+
+Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+",
+    "slug": "/services/child",
+    "updated": "2019-07-05T10:22:51.733Z",
+  },
+  Object {
+    "content": "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+<p><a href=\\"/services/child\\">Link to subpage</a></p>
+<h2>Ut enim ad minim veniam</h2>
+<p>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
+    "created": "2019-06-17T12:32:37.365Z",
+    "frontmatter": Object {
+      "menuOrder": 2,
+      "order": 2,
+      "title": "Service page",
+    },
+    "id": "cc945407-7e97-5f68-91f9-d297e60feb61",
+    "parentId": "5ab99e57-86b3-5e3e-8094-ef57b26b0bc3",
+    "rawContent": "
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+[Link to subpage](/services/child)
+
+## Ut enim ad minim veniam
+
+Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+",
+    "slug": "/services",
+    "updated": "2019-07-05T10:22:51.734Z",
+  },
+]
+`;

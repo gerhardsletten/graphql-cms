@@ -1,5 +1,6 @@
 const { graphql } = require(`graphql`)
-const { createSchema } = require('..')
+const fs = require(`fs-extra`)
+const SchemaCreator = require('..')
 
 const pages = [
   {
@@ -55,8 +56,17 @@ const pages = [
 ]
 
 describe(`Graphql api for pages`, () => {
-  const schema = createSchema({ pages })
+  const schema = SchemaCreator.createSchema({ pages })
   const runQuery = query => graphql(schema, query)
+
+  it(`Testing createSchemaFromConfig func`, async () => {
+    const readJsonSync = jest.spyOn(fs, "readJsonSync");
+    readJsonSync.mockImplementation(() => pages);
+    const result = SchemaCreator.createSchemaFromConfig()
+    expect(readJsonSync).toHaveBeenCalled()
+    expect(result).toMatchSnapshot()
+    jest.clearAllMocks()
+  })
 
   it(`Query frontpage`, async () => {
     const query = `
@@ -144,7 +154,7 @@ describe(`Graphql api for pages`, () => {
     const query = `
       {
         test: page(slug:"/") {
-          children (orderBy:frontmatter_order_DESC) {
+          children(orderBy:frontmatter_order_DESC) {
             count
             nodes {
               id
@@ -244,10 +254,8 @@ describe(`Graphql api for pages`, () => {
     const query = `
       {
         test: pages( where:{frontmatter_order__eq:2} ) {
-          count
           nodes {
             id
-            slug
           }
         }
       }
@@ -255,11 +263,9 @@ describe(`Graphql api for pages`, () => {
     const results = await runQuery(query)
     const expected = {
       test: {
-        count: 1,
         nodes: [
           {
-            id: '2',
-            slug: '/about'
+            id: "2"
           }
         ]
       }
@@ -271,10 +277,8 @@ describe(`Graphql api for pages`, () => {
     const query = `
       {
         test: pages( where:{frontmatter_menuOrder__ne: null} ) {
-          count
           nodes {
             id
-            slug
           }
         }
       }
@@ -282,15 +286,199 @@ describe(`Graphql api for pages`, () => {
     const results = await runQuery(query)
     const expected = {
       test: {
-        count: 2,
         nodes: [
           {
-            id: '1',
-            slug: '/'
+            id: '1'
           },
           {
-            id: '2',
-            slug: '/about'
+            id: '2'
+          }
+        ]
+      }
+    }
+    expect(results.errors).toBeUndefined()
+    expect(results.data).toEqual(expected)
+  })
+  it(`Query all pages with filter gt`, async () => {
+    const query = `
+      {
+        test: pages( where:{frontmatter_order__gt: 2} ) {
+          nodes {
+            id
+          }
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      test: {
+        nodes: [
+          {
+            id: '3'
+          }
+        ]
+      }
+    }
+    expect(results.errors).toBeUndefined()
+    expect(results.data).toEqual(expected)
+  })
+  it(`Query all pages with filter gte`, async () => {
+    const query = `
+      {
+        test: pages( where:{frontmatter_order__gte: 3} ) {
+          nodes {
+            id
+          }
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      test: {
+        nodes: [
+          {
+            id: '3'
+          }
+        ]
+      }
+    }
+    expect(results.errors).toBeUndefined()
+    expect(results.data).toEqual(expected)
+  })
+  it(`Query all pages with filter lt`, async () => {
+    const query = `
+      {
+        test: pages( where:{frontmatter_order__lt: 2} ) {
+          nodes {
+            id
+          }
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      test: {
+        nodes: [
+          {
+            id: '1'
+          }
+        ]
+      }
+    }
+    expect(results.errors).toBeUndefined()
+    expect(results.data).toEqual(expected)
+  })
+  it(`Query all pages with filter lte`, async () => {
+    const query = `
+      {
+        test: pages( where:{frontmatter_order__lte: 1} ) {
+          nodes {
+            id
+          }
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      test: {
+        nodes: [
+          {
+            id: '1'
+          }
+        ]
+      }
+    }
+    expect(results.errors).toBeUndefined()
+    expect(results.data).toEqual(expected)
+  })
+  it(`Query all pages with filter contains`, async () => {
+    const query = `
+      {
+        test: pages( where:{frontmatter_title__contains: "Homepage"} ) {
+          nodes {
+            id
+          }
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      test: {
+        nodes: [
+          {
+            id: '1'
+          }
+        ]
+      }
+    }
+    expect(results.errors).toBeUndefined()
+    expect(results.data).toEqual(expected)
+  })
+  it(`Query all pages with filter not_contains`, async () => {
+    const query = `
+      {
+        test: pages( where:{frontmatter_title__not_contains: "Homepage"} ) {
+          nodes {
+            id
+          }
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      test: {
+        nodes: [
+          {
+            id: '2'
+          },
+          {
+            id: '3'
+          }
+        ]
+      }
+    }
+    expect(results.errors).toBeUndefined()
+    expect(results.data).toEqual(expected)
+  })
+  it(`Query all pages with filter start_with`, async () => {
+    const query = `
+      {
+        test: pages( where:{frontmatter_title__start_with: "Home"} ) {
+          nodes {
+            id
+          }
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      test: {
+        nodes: [
+          {
+            id: '1'
+          }
+        ]
+      }
+    }
+    expect(results.errors).toBeUndefined()
+    expect(results.data).toEqual(expected)
+  })
+  it(`Query all pages with filter end_with`, async () => {
+    const query = `
+      {
+        test: pages( where:{slug__end_with: "contact"} ) {
+          nodes {
+            id
+          }
+        }
+      }
+    `
+    const results = await runQuery(query)
+    const expected = {
+      test: {
+        nodes: [
+          {
+            id: '3'
           }
         ]
       }
