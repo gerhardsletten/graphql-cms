@@ -8,7 +8,7 @@
     "build": "../src/bin.js build"
   },
   "dependencies": {
-    "apollo-server-micro": "^2.6.3",
+    "apollo-server-micro": "^2.14.2",
     "micro": "^9.3.4"
   }
 }
